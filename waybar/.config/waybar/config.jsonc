@@ -1,14 +1,26 @@
 {
   "layer": "top",
   "position": "top",
+  "height": 35,
+  "margin-top": 10,
+  "margin-left": 10,
   "margin-bottom": 0,
-  "modules-left": ["clock", "custom/separator", "hyprland/workspaces", "custom/separator", "tray"],
-  "modules-center": ["hyprland/window"],
+  "margin-right": 10,
+  "spacing": 0,
+  "modules-left": [
+    "clock", 
+    "custom/separator", 
+    "custom/separator", 
+    "tray",
+    "custom/nowplaying"
+  ],
+  "modules-center": ["hyprland/workspaces"],
   "modules-right": [
     "temperature",
     "memory",
     "cpu",
     "pulseaudio",
+    "custom/bluetooth",
     "battery",
     "network",
     "custom/separator",
@@ -20,65 +32,34 @@
   },
   "clock": {
     // 24 hour
-    // "format": " {:%H:%M} ",
+    "format": " {:%H:%M} ",
     // 12 hour
-    "format": " 󰸗 {:%I:%M %p} ",
+    // "format": " 󰸗 {:%I:%M %p} ",
     "interval": 60,
     "tooltip": true,
     "tooltip-format": "{:%d %B %H:%M}"
   },
   "hyprland/workspaces": {
-    "format": "{icon}",
-    "separate-outputs": false,
+    "all-outputs": true,
     "active-only": false,
-    // turn on true to show same all workspaces on each monitor
-    "all-outputs": false,
+    "on-click": "activate",
+    "format": "{icon}",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
     "format-icons": {
-      // 1-10
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10": "10",
-      // 11-10
-      "11": "1",
-      "12": "2",
-      "13": "3",
-      "14": "4",
-      "15": "5",
-      "16": "6",
-      "17": "7",
-      "18": "8",
-      "19": "9",
-      "110": "10"
-
-      // // 1-10
-      // "1": "一",
-      // "2": "二",
-      // "3": "三",
-      // "4": "四",
-      // "5": "五",
-      // "6": "六",
-      // "7": "七",
-      // "8": "八",
-      // "9": "九",
-      // "10": "十",
-      // // 11-10
-      // "11": "一",
-      // "12": "二",
-      // "13": "三",
-      // "14": "四",
-      // "15": "五",
-      // "16": "六",
-      // "17": "七",
-      // "18": "八",
-      // "19": "九",
-      // "110": "十"
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": "",
+      "7": "",
+      "8": "",
+      "9": "",
+      "10": "",
+      "urgent": "",
+      "active": "",
+      "default": ""
     }
   },
   "hyprland/window": {
@@ -88,21 +69,25 @@
     "format": " 󰖩",
     // "tooltip": "{ifname}",
     "tooltip-format": "{essid}",
-    "interval": 2
+    "interval": 2,
+    "on-click": "kitty -e iwctl"
   },
   "temperature": {
     "format": "{icon} {temperatureC}°C ",
     "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
     "critical-threshold": 80,
-    "format-icons": ["", "", ""]
+    "format-icons": ["", "", ""],
+    "on-click": "kitty -e htop"
   },
   "memory": {
     "format": "󰫗 {}% ",
-    "tooltip": "false"
+    "tooltip": "false",
+    "on-click": "kitty -e htop"
   },
   "cpu": {
     "format": " {usage}% ",
-    "tooltip": "false"
+    "tooltip": "false",
+    "on-click": "kitty -e htop"
   },
   "pulseaudio": {
     "format": " {volume}%",
@@ -113,9 +98,23 @@
     "format": "{capacity}% {icon}",
     "format-icons": ["", "", "", "", ""]
   },
-  "custom/powermenu": {
-    "format": "  ",
-    "tooltip": false,
-    "on-click": "exec poweroff"
-  }
+  "custom/bluetooth": {
+      "format": "",
+      "tooltip": false,
+      "on-click": "kitty -e blueman-manager"
+  },
+  "custom/nowplaying": {
+    "exec": "/home/apollo/.dotfiles/waybar/.config/waybar/nowplaying.sh",
+    "interval": 5,
+    "max-length": 80,
+    "format": "  {}",
+    "on-click": "playerctl play-pause",
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous"
+}
+  //"custom/powermenu": {
+  //  "format": "  ",
+  //  "tooltip": false,
+  //  "on-click": "exec poweroff"
+  //}
 }
