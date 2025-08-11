@@ -16,6 +16,11 @@
   padding-left: 4px;
 }
 
+#workspaces button {
+  color: #888888; /* Inactive */
+  font-weight: normal;
+}
+
 #workspaces button.active {
   color: #209bc0;
 }
